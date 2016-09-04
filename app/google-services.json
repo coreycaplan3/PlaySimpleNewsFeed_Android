@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "3620567230",
+    "project_id": "firebase-the-buzz"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:3620567230:android:97f23e3191365d92",
+        "android_client_info": {
+          "package_name": "com.github.coreycaplan3.thebuzz"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "3620567230-r22lpjfd0oj3i3mapg0jt9datdtgpbd9.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.github.coreycaplan3.thebuzz",
+            "certificate_hash": "306CBD25BDAA33B035E51C058195800477663B91"
+          }
+        },
+        {
+          "client_id": "3620567230-qi36vjjhnlbamopddq9onseack4cm7pn.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAGIFy-hdIBR171-Md9MHinWrnpGz0n3zw"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 1
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

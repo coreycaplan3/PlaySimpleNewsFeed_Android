@@ -1,0 +1,25 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <string name="app_name">The Buzz</string>
+    <string name="server_client_id" translatable="false" tools:ignore="TypographyDashes">
+        3620567230-japodp372ka0805c7vvhsqg7vm89a2sd.apps.googleusercontent.com
+    </string>
+    <string name="transition_shared_element" translatable="false">transition_shared_element</string>
+
+    <string name="google_sign_in_failed">Google sign in failed</string>
+    <string name="google_sign_in_failed_no_connection">Google sign in failed, no connection</string>
+    <string name="google_sign_in_failed_retry">Google sign in failed, please retry</string>
+    <string name="google_sign_in_failed_unknown">Google sign in failed due to an unknown error</string>
+    <string name="error_cannot_connect_google_play">Cannot connect to Google Play Services!</string>
+    <string name="default_points">4,013 points</string>
+    <string name="activity_not_signed_in_rationale">Woah there, you\'re gonna have to sign in to use that feature.</string>
+    <string name="create">Create</string>
+    <string name="body">Body</string>
+    <string name="title">Title</string>
+    <string name="error_no_connection">Can\'t connect right now</string>
+    <string name="retry">Retry</string>
+    <string name="view_profile">View Profile</string>
+    <string name="sign_out">Sign Out</string>
+    <string name="sign_out_successful">Sign out successful</string>
+    <string name="sign_out_unsuccessful">Sign out unsuccessful</string>
+    <string name="google_sign_out_failed_retry">Cannot sign out, please try again</string>
+</resources>
