@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.support.annotation.IntDef;
+import android.support.annotation.NonNull;
 
 import com.github.coreycaplan3.thebuzz.services.get.GetRequestConstants;
 import com.github.coreycaplan3.thebuzz.services.post.PostRequestConstants;
@@ -48,12 +49,15 @@ public final class ServiceResult implements Parcelable {
      */
     public static final int RESULT_SERVER_ERROR = 3;
 
+    public static final String KEY_RESULT_ONE = "RESULT_ONE";
+
     @ServiceCodeType
     private final int mServiceCode;
     private final int mTaskId;
+    @NonNull
     private final Bundle mBundle;
 
-    public ServiceResult(Bundle bundle, @ServiceCodeType int serviceCode, int taskId) {
+    public ServiceResult(@NonNull Bundle bundle, @ServiceCodeType int serviceCode, int taskId) {
         mBundle = bundle;
         mServiceCode = serviceCode;
         mTaskId = taskId;
@@ -63,6 +67,7 @@ public final class ServiceResult implements Parcelable {
      * @return A bundle that contains the exact parameters that were sent, when the GET request or
      * POST request was made.
      */
+    @NonNull
     public Bundle getBundle() {
         return mBundle;
     }

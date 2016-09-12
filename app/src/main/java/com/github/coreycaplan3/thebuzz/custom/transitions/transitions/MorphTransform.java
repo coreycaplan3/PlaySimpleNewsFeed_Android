@@ -15,7 +15,7 @@ import android.transition.TransitionValues;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.github.coreycaplan3.thebuzz.BuzzApplication;
+import com.github.coreycaplan3.thebuzz.application.BuzzApplication;
 import com.github.coreycaplan3.thebuzz.R;
 import com.github.coreycaplan3.thebuzz.utilities.visual.AnimationUtility;
 

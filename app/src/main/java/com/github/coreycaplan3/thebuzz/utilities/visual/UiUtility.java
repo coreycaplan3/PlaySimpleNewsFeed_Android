@@ -12,7 +12,7 @@ import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 
-import com.github.coreycaplan3.thebuzz.BuzzApplication;
+import com.github.coreycaplan3.thebuzz.application.BuzzApplication;
 import com.github.coreycaplan3.thebuzz.R;
 
 /**

@@ -69,11 +69,7 @@ public class MainActivity extends BaseActivity implements OnGoogleSignInListener
                 startActivity(intent, options.toBundle());
                 return true;
             case R.id.menu_sign_out:
-                GoogleSignInFragment fragment = getGoogleSignInFragment();
-                if (fragment != null) {
-                    //TODO progress dialog
-                    fragment.signOut();
-                }
+                signOut();
                 return true;
             case R.id.menu_view_profile:
                 intent = ProfileActivity.createIntent();
@@ -105,15 +101,26 @@ public class MainActivity extends BaseActivity implements OnGoogleSignInListener
     }
 
     @Override
+    public void onStartSignInWithBuzzServers() {
+        progressDialog.setMessage(getString(R.string.sign_in_with_buzz));
+        progressDialog.show();
+    }
+
+    @Override
     public void onGoogleSignInSuccessful() {
         mIsSignedIn = true;
         supportInvalidateOptionsMenu();
     }
 
+    private void signOut() {
+        progressDialog.setMessage(getString(R.string.signing_out));
+        progressDialog.show();
+        getGoogleSignInFragment().signOut();
+    }
 
     @Override
     public void onGoogleSignOutComplete(boolean isSuccessful) {
-        //TODO progress dialog?
+        progressDialog.dismiss();
         if (isSuccessful) {
             mIsSignedIn = false;
             invalidateOptionsMenu();
@@ -123,10 +130,7 @@ public class MainActivity extends BaseActivity implements OnGoogleSignInListener
                     R.string.retry, new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
-                            GoogleSignInFragment fragment = getGoogleSignInFragment();
-                            if (fragment != null) {
-                                fragment.signOut();
-                            }
+                            signOut();
                         }
                     });
         }

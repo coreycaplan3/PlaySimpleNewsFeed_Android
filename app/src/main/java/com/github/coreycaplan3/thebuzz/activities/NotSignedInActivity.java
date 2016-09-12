@@ -75,6 +75,12 @@ public class NotSignedInActivity extends BaseActivity implements OnGoogleSignInL
     }
 
     @Override
+    public void onStartSignInWithBuzzServers() {
+        progressDialog.setMessage(getString(R.string.sign_in_with_buzz));
+        progressDialog.show();
+    }
+
+    @Override
     public void onGoogleSignInSuccessful() {
         finishAfterTransition();
     }

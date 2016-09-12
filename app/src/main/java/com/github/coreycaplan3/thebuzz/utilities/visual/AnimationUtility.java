@@ -4,7 +4,6 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.TimeInterpolator;
 import android.content.Context;
-import android.os.Build;
 import android.support.v4.util.ArrayMap;
 import android.util.Property;
 import android.view.View;
@@ -12,7 +11,7 @@ import android.view.ViewAnimationUtils;
 import android.view.animation.AnimationUtils;
 import android.view.animation.Interpolator;
 
-import com.github.coreycaplan3.thebuzz.BuzzApplication;
+import com.github.coreycaplan3.thebuzz.application.BuzzApplication;
 import com.github.coreycaplan3.thebuzz.R;
 
 import java.util.ArrayList;

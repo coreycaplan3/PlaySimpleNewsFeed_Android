@@ -5,7 +5,7 @@ import android.os.Build;
 import android.support.v7.widget.Toolbar;
 import android.transition.Slide;
 
-import com.github.coreycaplan3.thebuzz.BuzzApplication;
+import com.github.coreycaplan3.thebuzz.application.BuzzApplication;
 import com.github.coreycaplan3.thebuzz.R;
 
 /**
