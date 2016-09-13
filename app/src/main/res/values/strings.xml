@@ -35,4 +35,6 @@
     <string name="posting_message">Posting your message…</string>
     <string name="error_server_no_connection">Can\'t connect to the server right now</string>
     <string name="signing_out">Signing out…</string>
+    <string name="error_no_connection_retry">Can\'t connect right now\nTap to retry</string>
+    <string name="empty_state_no_messages">This user has no messages\nTap to refresh</string>
 </resources>

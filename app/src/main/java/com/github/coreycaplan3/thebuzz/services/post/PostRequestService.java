@@ -28,10 +28,6 @@ public final class PostRequestService extends HttpRequestService {
 
     private static final String TAG = PostRequestService.class.getSimpleName();
 
-    static final String KEY_TASK_ID = "TASK_ID";
-    static final String KEY_ARGUMENT_ONE = "ARGUMENT_ONE";
-    static final String KEY_ARGUMENT_TWO = "ARGUMENT_TWO";
-
     public PostRequestService() {
         super(TAG);
     }

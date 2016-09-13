@@ -24,6 +24,7 @@ public abstract class HttpRequestService extends IntentService {
 
     public static final String KEY_TASK_ID = "TASK_ID";
     public static final String KEY_ARGUMENT_ONE = "ARGUMENT_ONE";
+    public static final String KEY_ARGUMENT_TWO = "ARGUMENT_TWO";
 
     public HttpRequestService(String name) {
         super(name);

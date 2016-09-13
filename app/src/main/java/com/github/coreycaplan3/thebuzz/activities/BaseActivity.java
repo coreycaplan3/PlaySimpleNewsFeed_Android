@@ -28,6 +28,9 @@ import com.github.coreycaplan3.thebuzz.receivers.PostRequestReceiver.OnPostReque
 import com.github.coreycaplan3.thebuzz.services.ServiceResult;
 import com.github.coreycaplan3.thebuzz.utilities.visual.UiUtility;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static android.support.design.widget.AppBarLayout.LayoutParams.SCROLL_FLAG_SCROLL;
 import static android.support.design.widget.Snackbar.LENGTH_LONG;
 
@@ -75,7 +78,7 @@ abstract class BaseActivity extends AppCompatActivity implements OnGetRequestCom
                     .commit();
         } else {
             progressDialog.setMessage(savedInstanceState.getString(KEY_PROGRESS_TEXT));
-            if(savedInstanceState.getBoolean(KEY_PROGRESS_SHOWING)) {
+            if (savedInstanceState.getBoolean(KEY_PROGRESS_SHOWING)) {
                 progressDialog.show();
             }
         }
@@ -202,7 +205,7 @@ abstract class BaseActivity extends AppCompatActivity implements OnGetRequestCom
     }
 
     @Override
-    public void onGetRequestComplete(@NonNull ServiceResult serviceResult) {
+    public final void onGetRequestComplete(@NonNull ServiceResult serviceResult) {
         switch (serviceResult.getServiceCode()) {
             case ServiceResult.RESULT_SUCCESS:
                 break;
@@ -213,10 +216,21 @@ abstract class BaseActivity extends AppCompatActivity implements OnGetRequestCom
                 UiUtility.snackbar(getRootView(), R.string.error_server_no_connection, LENGTH_LONG);
                 break;
         }
+
+        List<Fragment> fragmentList = getSupportFragmentManager().getFragments();
+        if (fragmentList != null) {
+            for (int i = 0; i < fragmentList.size(); i++) {
+                Fragment f = fragmentList.get(i);
+                if (f instanceof OnGetRequestCompleteListener) {
+                    ((OnGetRequestCompleteListener) f).onGetRequestComplete(serviceResult);
+                }
+            }
+        }
+
     }
 
     @Override
-    public void onPostRequestComplete(@NonNull ServiceResult serviceResult) {
+    public final void onPostRequestComplete(@NonNull ServiceResult serviceResult) {
         switch (serviceResult.getServiceCode()) {
             case ServiceResult.RESULT_SUCCESS:
                 break;
@@ -227,6 +241,17 @@ abstract class BaseActivity extends AppCompatActivity implements OnGetRequestCom
                 UiUtility.snackbar(getRootView(), R.string.error_server_no_connection, LENGTH_LONG);
                 break;
         }
+
+        List<Fragment> fragmentList = getSupportFragmentManager().getFragments();
+        if (fragmentList != null) {
+            for (int i = 0; i < fragmentList.size(); i++) {
+                Fragment f = fragmentList.get(i);
+                if (f instanceof OnPostRequestCompleteListener) {
+                    ((OnPostRequestCompleteListener) f).onPostRequestComplete(serviceResult);
+                }
+            }
+        }
+
     }
 
     @Override
@@ -273,7 +298,7 @@ abstract class BaseActivity extends AppCompatActivity implements OnGetRequestCom
         outState.putBoolean(KEY_PROGRESS_SHOWING, progressDialog.isShowing());
         outState.putString(KEY_PROGRESS_TEXT, mProgressMessage);
 
-        if(progressDialog.isShowing()) {
+        if (progressDialog.isShowing()) {
             progressDialog.dismiss();
             progressDialog = null;
         }

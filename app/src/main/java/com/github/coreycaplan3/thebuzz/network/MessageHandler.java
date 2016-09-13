@@ -49,11 +49,11 @@ public class MessageHandler extends AbstractNetworkHandler {
 
         ArrayList<Pair<String, String>> pairs = new ArrayList<>();
         pairs.add(new Pair<>("title", title));
-        pairs.add(new Pair<>("body", title));
+        pairs.add(new Pair<>("body", body));
         pairs.add(new Pair<>("account_id", accountId));
         pairs.add(new Pair<>("id_token", idToken));
 
-        return sendPost(serverMethod, buildPostParameters(pairs));
+        return sendPost(serverMethod, pairs);
     }
 
     /**
@@ -89,7 +89,7 @@ public class MessageHandler extends AbstractNetworkHandler {
         pairs.add(new Pair<>("accound_id", accountId));
         pairs.add(new Pair<>("id_token", idToken));
 
-        return sendPost(serverMethod, buildPostParameters(pairs));
+        return sendPost(serverMethod, pairs);
     }
 
 }

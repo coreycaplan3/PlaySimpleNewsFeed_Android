@@ -14,6 +14,8 @@ import com.github.coreycaplan3.thebuzz.services.ServiceResult;
 
 import org.json.JSONArray;
 
+import static com.github.coreycaplan3.thebuzz.services.get.GetRequestConstants.*;
+
 /**
  * Created by Corey on 8/10/2016.
  * Project: TheBuzz
@@ -40,10 +42,10 @@ public final class GetRequestService extends HttpRequestService {
         String idToken = account == null ? null : account.getToken();
 
         switch (taskId) {
-            case GetRequestConstants.GET_MESSAGES:
+            case GET_MESSAGES:
                 return new MessageHandler(accountId, idToken)
                         .getMessages();
-            case GetRequestConstants.GET_PROFILE:
+            case GET_PROFILE:
                 String otherUserId = intent.getStringExtra(KEY_ARGUMENT_ONE);
                 if (otherUserId == null) {
                     throw new IllegalArgumentException("OTHER USER MUST NOT BE NULL!");
@@ -60,10 +62,10 @@ public final class GetRequestService extends HttpRequestService {
     protected Bundle parseSuccessfulNetworkResult(int taskId, String json) {
         Bundle bundle = new Bundle();
         switch (taskId) {
-            case GetRequestConstants.GET_MESSAGES:
+            case GET_MESSAGES:
                 parseMessages(bundle, json);
                 break;
-            case GetRequestConstants.GET_PROFILE:
+            case GET_PROFILE:
                 parseProfile(bundle, json);
                 break;
             default:
