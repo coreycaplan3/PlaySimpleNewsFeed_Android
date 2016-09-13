@@ -1,6 +1,7 @@
 package com.github.coreycaplan3.thebuzz.fragments;
 
 import android.app.Activity;
+import android.app.IntentService;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentSender.SendIntentException;
@@ -14,6 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.github.coreycaplan3.thebuzz.R;
+import com.github.coreycaplan3.thebuzz.services.BuzzSignInService;
 import com.github.coreycaplan3.thebuzz.utilities.visual.UiUtility;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
@@ -29,6 +31,7 @@ import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.common.api.Status;
 
 import static com.github.coreycaplan3.thebuzz.constants.BuzzConstants.*;
+import static com.github.coreycaplan3.thebuzz.services.BuzzSignInService.SIGN_IN;
 import static com.google.android.gms.auth.api.signin.GoogleSignInStatusCodes.*;
 
 /**
@@ -264,12 +267,10 @@ public class GoogleSignInFragment extends Fragment implements ConnectionCallback
         if (result.isSuccess()) {
             sGoogleSignInAccount = result.getSignInAccount();
             if (sGoogleSignInAccount != null) {
-                String code = sGoogleSignInAccount.getServerAuthCode();
-                if (mSignInListener != null) {
-                    mSignInListener.onGoogleSignInSuccessful();
-                } else {
-                    Log.e(TAG, "handleSignInResult: Failed to transfer sign in result to activity!");
-                }
+                String idToken = sGoogleSignInAccount.getIdToken();
+                mSignInListener.onStartSignInWithBuzzServers();
+                Intent intent = BuzzSignInService.createIntent(SIGN_IN, idToken);
+                getActivity().startService(intent);
             } else {
                 Log.e(TAG, "handleSignInResult: The Google Sign In account was null!");
             }

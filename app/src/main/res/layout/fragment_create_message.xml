@@ -1,89 +1,97 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@android:color/background_light"
     android:orientation="vertical">
 
-    <android.support.v7.widget.CardView
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/standard_padding"
-        app:cardBackgroundColor="@color/cardview_light_background"
-        app:cardCornerRadius="2dp"
-        app:cardElevation="2dp"
-        app:cardUseCompatPadding="true"
-        app:contentPadding="@dimen/standard_padding">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-        <android.support.design.widget.TextInputLayout
+        <android.support.v7.widget.CardView
+            style="@style/Card.Floating"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="@dimen/standard_padding"
-            app:counterEnabled="true"
-            app:counterMaxLength="@integer/message_title_max_count"
-            app:errorEnabled="true"
-            app:hintEnabled="true">
+            android:layout_margin="@dimen/standard_padding_small"
+            app:cardBackgroundColor="@color/cardview_light_background">
 
-            <EditText
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/fragment_create_message_title_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/title"
-                android:inputType="textCapWords" />
+                android:padding="@dimen/standard_padding"
+                app:counterEnabled="true"
+                app:counterMaxLength="@integer/message_title_max_count"
+                app:errorEnabled="true"
+                app:hintEnabled="true">
 
-        </android.support.design.widget.TextInputLayout>
+                <EditText
+                    android:id="@+id/fragment_create_message_title_edit_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/title"
+                    android:inputType="textCapWords" />
 
-    </android.support.v7.widget.CardView>
+            </android.support.design.widget.TextInputLayout>
 
-    <android.support.v7.widget.CardView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/standard_padding"
-        app:cardBackgroundColor="@color/cardview_light_background"
-        app:cardCornerRadius="2dp"
-        app:cardElevation="2dp"
-        app:cardUseCompatPadding="true"
-        app:contentPadding="@dimen/standard_padding_small">
+        </android.support.v7.widget.CardView>
 
-        <android.support.design.widget.TextInputLayout
+        <android.support.v7.widget.CardView
+            style="@style/Card.Floating"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="@dimen/standard_padding"
-            app:counterEnabled="true"
-            app:counterMaxLength="@integer/message_body_max_count"
-            app:errorEnabled="true"
-            app:hintEnabled="true">
+            android:layout_margin="@dimen/standard_padding_small">
 
-            <EditText
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/fragment_create_message_body_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/body"
-                android:inputType="textCapSentences" />
+                android:padding="@dimen/standard_padding"
+                app:counterEnabled="true"
+                app:counterMaxLength="@integer/message_body_max_count"
+                app:errorEnabled="true"
+                app:hintAnimationEnabled="true"
+                app:hintEnabled="true">
 
-        </android.support.design.widget.TextInputLayout>
+                <EditText
+                    android:id="@+id/fragment_create_message_body_edit_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="144dp"
+                    android:ellipsize="start"
+                    android:gravity="top"
+                    android:hint="@string/body"
+                    android:inputType="textCapSentences"
+                    android:lineSpacingMultiplier="1.25"
+                    android:minLines="2" />
 
-    </android.support.v7.widget.CardView>
+            </android.support.design.widget.TextInputLayout>
 
-    <android.support.v7.widget.CardView
-        android:id="@+id/activity_not_signed_in_google_card"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_margin="@dimen/standard_padding"
-        android:clickable="true"
-        android:foreground="?android:attr/selectableItemBackground"
-        app:cardBackgroundColor="@color/colorPrimary"
-        app:cardCornerRadius="2dp"
-        app:cardElevation="2dp">
+        </android.support.v7.widget.CardView>
 
-        <TextView
-            style="@style/TextAppearance.AppCompat.Widget.Button"
-            android:layout_width="144dp"
-            android:layout_height="44dp"
-            android:gravity="center"
-            android:text="@string/create"
-            android:textColor="@color/titleTextColor"
-            android:textSize="14sp" />
+        <android.support.v7.widget.CardView
+            android:id="@+id/fragment_create_message_create_card"
+            style="@style/Card.Clickable"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_margin="@dimen/standard_padding"
+            app:cardBackgroundColor="@color/colorPrimary">
 
-    </android.support.v7.widget.CardView>
+            <TextView
+                style="@style/TextAppearance.AppCompat.Widget.Button"
+                android:layout_width="144dp"
+                android:layout_height="44dp"
+                android:gravity="center"
+                android:text="@string/create"
+                android:textAppearance="@style/TextAppearance.AppCompat.Widget.Button"
+                android:textColor="@color/titleTextColor"
+                android:textSize="16sp" />
 
-</LinearLayout>
+        </android.support.v7.widget.CardView>
+
+    </LinearLayout>
+
+</android.support.v4.widget.NestedScrollView>

@@ -1,11 +1,13 @@
 package com.github.coreycaplan3.thebuzz.activities;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
 import android.support.design.widget.AppBarLayout;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.ActionBar;
@@ -19,11 +21,15 @@ import com.github.coreycaplan3.thebuzz.fragments.FragmentTags;
 import com.github.coreycaplan3.thebuzz.fragments.GoogleSignInFragment;
 import com.github.coreycaplan3.thebuzz.receivers.GetRequestReceiver;
 import com.github.coreycaplan3.thebuzz.receivers.GetRequestReceiver.OnGetRequestCompleteListener;
+import com.github.coreycaplan3.thebuzz.receivers.GoogleSignInReceiver;
+import com.github.coreycaplan3.thebuzz.receivers.GoogleSignInReceiver.OnGoogleSignInStatusChangeListener;
 import com.github.coreycaplan3.thebuzz.receivers.PostRequestReceiver;
 import com.github.coreycaplan3.thebuzz.receivers.PostRequestReceiver.OnPostRequestCompleteListener;
 import com.github.coreycaplan3.thebuzz.services.ServiceResult;
+import com.github.coreycaplan3.thebuzz.utilities.visual.UiUtility;
 
 import static android.support.design.widget.AppBarLayout.LayoutParams.SCROLL_FLAG_SCROLL;
+import static android.support.design.widget.Snackbar.LENGTH_LONG;
 
 /**
  * Created by Corey on 8/10/2016.
@@ -32,23 +38,46 @@ import static android.support.design.widget.AppBarLayout.LayoutParams.SCROLL_FLA
  * Purpose of Class:
  */
 abstract class BaseActivity extends AppCompatActivity implements OnGetRequestCompleteListener,
-        OnPostRequestCompleteListener {
+        OnPostRequestCompleteListener, OnGoogleSignInStatusChangeListener {
 
     private static final String TAG = BaseActivity.class.getSimpleName();
 
+    protected ProgressDialog progressDialog;
+    private String mProgressMessage;
     private AppBarLayout mAppBarLayout;
 
     private GetRequestReceiver mGetRequestReceiver;
     private PostRequestReceiver mPostRequestReceiver;
+    private GoogleSignInReceiver mGoogleSignInReceiver;
+
+    private static final String KEY_PROGRESS_SHOWING = "PROGRESS_SHOWING";
+    private static final String KEY_PROGRESS_TEXT = "PROGRESS_TEXT";
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        progressDialog = new ProgressDialog(this) {
+            @Override
+            public void setMessage(CharSequence message) {
+                super.setMessage(message);
+                // Cache the value of message since the progress dialog doesn't have a getter for
+                // the message field.
+                mProgressMessage = (String) message;
+            }
+        };
+        progressDialog.setIndeterminate(true);
+        progressDialog.setCancelable(false);
+
         if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction()
                     .add(GoogleSignInFragment.newInstance(), FragmentTags.TAG_GOOGLE_SIGN_IN)
                     .disallowAddToBackStack()
                     .commit();
+        } else {
+            progressDialog.setMessage(savedInstanceState.getString(KEY_PROGRESS_TEXT));
+            if(savedInstanceState.getBoolean(KEY_PROGRESS_SHOWING)) {
+                progressDialog.show();
+            }
         }
     }
 
@@ -59,11 +88,13 @@ abstract class BaseActivity extends AppCompatActivity implements OnGetRequestCom
 
         mGetRequestReceiver = new GetRequestReceiver(this);
         mPostRequestReceiver = new PostRequestReceiver(this);
+        mGoogleSignInReceiver = new GoogleSignInReceiver(this);
 
         // Register the receivers
         LocalBroadcastManager manager = LocalBroadcastManager.getInstance(this);
         manager.registerReceiver(mGetRequestReceiver, GetRequestReceiver.INTENT_FILTER);
         manager.registerReceiver(mPostRequestReceiver, PostRequestReceiver.INTENT_FILTER);
+        manager.registerReceiver(mGoogleSignInReceiver, GoogleSignInReceiver.INTENT_FILTER);
     }
 
     private void setupActionBar() {
@@ -107,7 +138,6 @@ abstract class BaseActivity extends AppCompatActivity implements OnGetRequestCom
     /**
      * @return The {@link GoogleSignInFragment} that is bound to this activity.
      */
-    @Nullable
     protected final GoogleSignInFragment getGoogleSignInFragment() {
         return (GoogleSignInFragment) getSupportFragmentManager()
                 .findFragmentByTag(FragmentTags.TAG_GOOGLE_SIGN_IN);
@@ -173,12 +203,45 @@ abstract class BaseActivity extends AppCompatActivity implements OnGetRequestCom
 
     @Override
     public void onGetRequestComplete(@NonNull ServiceResult serviceResult) {
-
+        switch (serviceResult.getServiceCode()) {
+            case ServiceResult.RESULT_SUCCESS:
+                break;
+            case ServiceResult.RESULT_NO_CONNECTION:
+                UiUtility.snackbar(getRootView(), R.string.error_no_connection, LENGTH_LONG);
+                break;
+            case ServiceResult.RESULT_SERVER_ERROR:
+                UiUtility.snackbar(getRootView(), R.string.error_server_no_connection, LENGTH_LONG);
+                break;
+        }
     }
 
     @Override
     public void onPostRequestComplete(@NonNull ServiceResult serviceResult) {
+        switch (serviceResult.getServiceCode()) {
+            case ServiceResult.RESULT_SUCCESS:
+                break;
+            case ServiceResult.RESULT_NO_CONNECTION:
+                UiUtility.snackbar(getRootView(), R.string.error_no_connection, LENGTH_LONG);
+                break;
+            case ServiceResult.RESULT_SERVER_ERROR:
+                UiUtility.snackbar(getRootView(), R.string.error_server_no_connection, LENGTH_LONG);
+                break;
+        }
+    }
 
+    @Override
+    public void onGoogleSignInWithBuzzComplete(@NonNull ServiceResult serviceResult) {
+        switch (serviceResult.getServiceCode()) {
+            case ServiceResult.RESULT_SUCCESS:
+                progressDialog.dismiss();
+                UiUtility.snackbar(getRootView(), R.string.sign_in_successful, LENGTH_LONG);
+                break;
+            case ServiceResult.RESULT_NO_CONNECTION:
+            case ServiceResult.RESULT_SERVER_ERROR:
+                UiUtility.snackbar(getRootView(), R.string.error_no_connection,
+                        LENGTH_LONG);
+                break;
+        }
     }
 
     @Override
@@ -196,6 +259,23 @@ abstract class BaseActivity extends AppCompatActivity implements OnGetRequestCom
         if (mPostRequestReceiver != null) {
             manager.unregisterReceiver(mPostRequestReceiver);
             mPostRequestReceiver = null;
+        }
+
+        if (mGoogleSignInReceiver != null) {
+            manager.unregisterReceiver(mGoogleSignInReceiver);
+            mGoogleSignInReceiver = null;
+        }
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putBoolean(KEY_PROGRESS_SHOWING, progressDialog.isShowing());
+        outState.putString(KEY_PROGRESS_TEXT, mProgressMessage);
+
+        if(progressDialog.isShowing()) {
+            progressDialog.dismiss();
+            progressDialog = null;
         }
     }
 }

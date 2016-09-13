@@ -22,8 +22,17 @@
     <string name="sign_out_successful">Sign out successful</string>
     <string name="sign_out_unsuccessful">Sign out unsuccessful</string>
     <string name="google_sign_out_failed_retry">Cannot sign out, please try again</string>
+
     <string name="default_message_title">Athlete Refuses to Stand for National Anthem</string>
     <string name="default_message_body">This just in, during the playing of our nation\'s national anthem, a football player refused to stand up. He is now known as a shithead.</string>
     <string name="default_message_up_votes">4,013</string>
     <string name="default_profile_name">Corey Caplan</string>
+    <string name="sign_in_with_buzz">Signing in with The Buzz…</string>
+    <string name="sign_in_successful">Sign in successful</string>
+    <string name="error_required">This field is required</string>
+    <string name="error_too_short">This field is too short</string>
+    <string name="error_too_long">This field is too long</string>
+    <string name="posting_message">Posting your message…</string>
+    <string name="error_server_no_connection">Can\'t connect to the server right now</string>
+    <string name="signing_out">Signing out…</string>
 </resources>

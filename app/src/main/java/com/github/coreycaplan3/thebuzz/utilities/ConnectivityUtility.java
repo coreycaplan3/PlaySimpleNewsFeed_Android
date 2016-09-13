@@ -4,7 +4,7 @@ import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 
-import com.github.coreycaplan3.thebuzz.BuzzApplication;
+import com.github.coreycaplan3.thebuzz.application.BuzzApplication;
 
 /**
  * Created by Corey on 5/7/2016.
