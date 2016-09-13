@@ -105,6 +105,11 @@ public class MainActivity extends BaseActivity implements OnGoogleSignInListener
     }
 
     @Override
+    public void onStartSignInWithBuzzServers() {
+
+    }
+
+    @Override
     public void onGoogleSignInSuccessful() {
         mIsSignedIn = true;
         supportInvalidateOptionsMenu();
